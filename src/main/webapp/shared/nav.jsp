@@ -11,7 +11,7 @@
           <a class="nav-link active" href="home.jsp">Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="product.jsp">Product</a>
+          <a class="nav-link " href="product.jsp">Product</a>
         </li>  
     </div>
   </div>

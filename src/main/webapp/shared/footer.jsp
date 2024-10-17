@@ -1,5 +1,7 @@
- <footer class="container ">
-            <strong>&copy; 2023 - Nguyen Ngoc Linh - 2321160062 </strong>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<footer class="container ">
+      
+            <strong>&copy; 2023 - Nguyễn Ngọc Linh - 2321160062 </strong>
         </footer>
 
         <!-- Optional JavaScript -->
