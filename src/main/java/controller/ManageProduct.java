@@ -5,6 +5,7 @@
 package controller;
 
 import dao.HoaDAO;
+import dao.LoaiDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -34,8 +35,8 @@ public class ManageProduct extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-
         HoaDAO hoaDoa = new HoaDAO();
+        LoaiDAO loaiDao = new LoaiDAO();
         String action = "list";
         if (request.getParameter("action") != null) {
             action = request.getParameter("action");
@@ -47,9 +48,31 @@ public class ManageProduct extends HttpServlet {
                 request.getRequestDispatcher("admin/listproduct.jsp").forward(request, response);
                 break;
             case "add":
+                request.setAttribute("dsLoai", loaiDao.getAll());
+                request.getRequestDispatcher("admin/addproduct.jsp").forward(request, response);
                 break;
-            default:
-                throw new AssertionError();
+            case "edit":
+                int maHoa = Integer.parseInt(request.getParameter("mahoa"));
+                Hoa hoa = hoaDoa.getById(maHoa);
+                request.setAttribute("hoa", hoa);
+                request.setAttribute("dsLoai", loaiDao.getAll());
+                request.getRequestDispatcher("admin/editproduct.jsp").forward(request, response);
+                break;
+            case "update":
+                int maHoaUpdate = Integer.parseInt(request.getParameter("mahoa"));
+                String tenHoa = request.getParameter("tenhoa");
+                double gia = Double.parseDouble(request.getParameter("gia"));
+                String hinh = request.getParameter("hinh");
+                int maLoai = Integer.parseInt(request.getParameter("maloai"));
+                Hoa hoaUpdate = new Hoa(maHoaUpdate, tenHoa, gia, hinh, maLoai);
+                hoaDoa.Update(hoaUpdate);
+                response.sendRedirect("ManageProduct?action=list");
+                break;
+            case "delete":
+                int maHoaDelete = Integer.parseInt(request.getParameter("mahoa"));
+                hoaDoa.Delete(maHoaDelete);
+                response.sendRedirect("ManageProduct?action=list");
+                break;
         }
     }
 

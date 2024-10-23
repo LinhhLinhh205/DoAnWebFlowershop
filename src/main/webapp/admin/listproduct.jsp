@@ -13,7 +13,7 @@
 <div class="container">
     <h2> Danh sách sản phẩm</h2>
     <div class="mb-2 text-end">
-        <a href="#" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Thêm mới</a>
+        <a href="ManageProduct?action=add" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Thêm mới</a>
     </div>
 
     <table class="table table-bordered table-striped">
@@ -35,8 +35,9 @@
             </td>
             <td><%=x.getMaloai()%></td>
             <td>
-                <a href="Manageproduct?action=edit&mahoa=<%=x.getMahoa()%>" class="btn btn-secondary"> <i class="bi bi-pencil-square"></i> Sửa</a>
-                <a href="Manageproduct?action=delete&mahoa=<%=x.getMahoa()%>" class="btn btn-danger"> <i class="bi bi-trash"></i> Xoá</a>
+                <a href="ManageProduct?action=edit&mahoa=<%=x.getMahoa()%>" class="btn btn-secondary"> <i class="bi bi-pencil-square"></i> Sửa</a>
+                <a href="ManageProduct?action=delete&mahoa=<%=x.getMahoa()%>" class="btn btn-danger" onclick="return confirm('Bạn cod chắc chắn xoá không?');"> 
+                    <i class="bi bi-trash"></i> Xoá</a>
             </td>
         </tr>  
         <% }

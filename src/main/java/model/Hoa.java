@@ -33,6 +33,14 @@ public class Hoa {
         this.maloai = maloai;
         this.ngaycapnhat = ngaycapnhat;
     }
+    public Hoa(int mahoa, String tenhoa, double gia, String hinh, int maloai) {
+        this.mahoa = mahoa;
+        this.tenhoa = tenhoa;
+        this.gia = gia;
+        this.hinh = hinh;
+        this.maloai = maloai;
+        this.ngaycapnhat = new Date(System.currentTimeMillis());
+    }
 
     public int getMahoa() {
         return mahoa;
