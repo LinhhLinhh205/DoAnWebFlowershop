@@ -21,7 +21,7 @@
 %>
 <div class="container">  
     <h2>Cập nhật sản phẩm (Hoa)</h2>    
-    <form action="ManageProduct?action=update" method="post" enctype="multipart/form-data">
+    <form action="ManageProduct?action=edit" method="post" enctype="multipart/form-data">
         <input type="hidden" name="mahoa" value="<%=hoa.getMahoa()%>">
         <div class="mb-2">
             <label>Tên hoa</label>

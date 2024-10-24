@@ -7,12 +7,16 @@ package controller;
 import dao.HoaDAO;
 import dao.LoaiDAO;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.Hoa;
 
 /**
@@ -20,6 +24,7 @@ import model.Hoa;
  * @author ADMIN
  */
 @WebServlet(name = "ManageProduct", urlPatterns = {"/ManageProduct"})
+@MultipartConfig
 public class ManageProduct extends HttpServlet {
 
     /**
@@ -48,9 +53,30 @@ public class ManageProduct extends HttpServlet {
                 request.getRequestDispatcher("admin/listproduct.jsp").forward(request, response);
                 break;
             case "add":
-                request.setAttribute("dsLoai", loaiDao.getAll());
-                request.getRequestDispatcher("admin/addproduct.jsp").forward(request, response);
-                break;
+                if (request.getMethod().equalsIgnoreCase("get")) {
+                    request.setAttribute("dsLoai", loaiDao.getAll());
+                    request.getRequestDispatcher("admin/addproduct.jsp").forward(request, response);
+                } else if (request.getMethod().equalsIgnoreCase("post")) {
+                    String tenhoa = request.getParameter("tenhoa");
+                    double gia = Double.parseDouble(request.getParameter("gia"));
+                    Part part = request.getPart("hinh");
+                    int maloai = Integer.parseInt(request.getParameter("maloai"));
+
+                    String reelPath = request.getServletContext().getRealPath("/assets/images/products");
+                    String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    part.write(reelPath + "/" + filename);
+
+                    Hoa objInsert = new Hoa(0, tenhoa, gia, filename, maloai, new Date(new java.util.Date().getTime()));
+                    if (hoaDoa.Insert(objInsert)) {
+                        request.setAttribute("success", "Thêm sản phẩm thành công");
+                    } else {
+                        request.setAttribute("error", "Thêm sản phẩm thất bại");
+                    }
+                    request.getRequestDispatcher("ManageProduct?action=list").forward(request, response);
+
+                    break;
+                }
+
             case "edit":
                 int maHoa = Integer.parseInt(request.getParameter("mahoa"));
                 Hoa hoa = hoaDoa.getById(maHoa);
@@ -58,19 +84,15 @@ public class ManageProduct extends HttpServlet {
                 request.setAttribute("dsLoai", loaiDao.getAll());
                 request.getRequestDispatcher("admin/editproduct.jsp").forward(request, response);
                 break;
-            case "update":
-                int maHoaUpdate = Integer.parseInt(request.getParameter("mahoa"));
-                String tenHoa = request.getParameter("tenhoa");
-                double gia = Double.parseDouble(request.getParameter("gia"));
-                String hinh = request.getParameter("hinh");
-                int maLoai = Integer.parseInt(request.getParameter("maloai"));
-                Hoa hoaUpdate = new Hoa(maHoaUpdate, tenHoa, gia, hinh, maLoai);
-                hoaDoa.Update(hoaUpdate);
-                response.sendRedirect("ManageProduct?action=list");
-                break;
             case "delete":
                 int maHoaDelete = Integer.parseInt(request.getParameter("mahoa"));
-                hoaDoa.Delete(maHoaDelete);
+                if (hoaDoa.Delete(maHoaDelete))
+                 {
+                    request.setAttribute("delete", "Xoá sản phẩm thành công");
+                }
+                else{
+                        request.setAttribute("no", "Xoá sản phẩm thất bại");
+                        }
                 response.sendRedirect("ManageProduct?action=list");
                 break;
         }

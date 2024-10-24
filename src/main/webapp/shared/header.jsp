@@ -14,7 +14,8 @@
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- Custom style -->
         <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/style.css">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/bootstrap.css">       
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/bootstrap.css">  
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>   
    <body>  
      <%
