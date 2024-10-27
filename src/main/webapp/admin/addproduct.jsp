@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.LoaiDAO"%>
 <%@page import="model.Loai"%>
@@ -34,6 +35,7 @@
             <label>Thể loại</label>
             <select name="maloai" class="form-control" required="">      
                 <%
+                    
                     for (Loai x : dsLoai) {
                 %>
                 <option value="<%=x.getMaloai()%>"><%=x.getTenloai()%></option>

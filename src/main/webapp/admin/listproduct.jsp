@@ -20,13 +20,8 @@
 </script>
 <%
     }
-    if (request.getAttribute("delete") != null){
 %>
-<script>
-    Swal.fire("<%=request.getAttribute("delete")%>");
-</script>
-<%
-    } %>
+
 <div class="container">
     <h2> Danh sách sản phẩm</h2>
     <div class="mb-2 text-end">
@@ -42,8 +37,7 @@
             <th>Action</th>
         </tr>  
         <%
-                DecimalFormat 
-            fmt=new DecimalFormat("#,##0");
+                DecimalFormat fmt=new DecimalFormat("#,##0");
             ArrayList<Hoa> dsHoa = (ArrayList<Hoa>) request.getAttribute("dsHoa");
             for (Hoa x : dsHoa) {
         %>
@@ -55,7 +49,7 @@
             <td><%=x.getMaloai()%></td>
             <td>
                 <a href="ManageProduct?action=edit&mahoa=<%=x.getMahoa()%>" class="btn btn-secondary"> <i class="bi bi-pencil-square"></i> Sửa</a>
-                <a href="ManageProduct?action=delete&mahoa=<%=x.getMahoa()%>" class="btn btn-danger"> <i class="bi bi-trash"></i> Xoá</a>
+                <a href="ManageProduct?action=delete&mahoa=<%=x.getMahoa()%>" class="btn btn-danger"> <i class="bi bi-trash" onclick="return confirm("Bạn có chắc chắn xoá không?")"></i> Xoá</a>
             </td>
         </tr>  
         <% }

@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="dao.HoaDAO"%>
 <%@page import="model.Hoa"%>
 <%@page import="model.Loai"%>
@@ -13,36 +14,37 @@
 <jsp:include page="../shared/header.jsp" />
 <jsp:include page="../shared/nav.jsp" />
 <%
-    LoaiDAO loaiDao = new LoaiDAO();
-    ArrayList<Loai> dsLoai = loaiDao.getAll();
-    int maHoa=Integer.parseInt(request.getParameter("mahoa"));
-    HoaDAO hoaDao=new HoaDAO();
-    Hoa hoa=hoaDao.getById(maHoa);
+    
+    Hoa hoa = (Hoa) request.getAttribute("hoa");
+    ArrayList<Loai> dsLoai = (ArrayList<Loai>) request.getAttribute("dsLoai");
 %>
 <div class="container">  
     <h2>Cập nhật sản phẩm (Hoa)</h2>    
-    <form action="ManageProduct?action=edit" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="mahoa" value="<%=hoa.getMahoa()%>">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="mahoa" value="<%= hoa.getMahoa()%>" />
+        <input type="hidden" name="oldImg" value="<%= hoa.getHinh() %>" />
         <div class="mb-2">
             <label>Tên hoa</label>
-            <input type="text" name="tenhoa" class="form-control" value="<%=hoa.getTenhoa()%>" />
+            <input type="text" name="tenhoa" class="form-control" required="" value="<%=hoa.getTenhoa()%>" />
         </div>
         <div class="mb-2">
             <label>Giá</label>
-            <input type="number" name="gia"  class="form-control" value="<%=hoa.getGia()%>"/>
+            <input type="number" name="gia"  class="form-control" required="" value="<%=hoa.getGia()%>"/>
         </div>
         <div class="mb-2">
             <label>Hình ảnh</label>
             <input type="file" name="hinh"  class="form-control" />
             <img src="assets/images/products/<%=hoa.getHinh()%>" alt="Current Image" style="width: 100px" />
         </div>
-         <div class="mb-2">
+        <div class="mb-2">
             <label>Thể loại</label>
             <select name="maloai" class="form-control">      
-                <%
+                <%                    
                     for (Loai x : dsLoai) {
                 %>
-                <option value="<%=x.getMaloai()%>"><%=x.getTenloai()%></option>
+                <option value="<%=x.getMaloai()%>" <%=hoa.getMaloai() == x.getMaloai() ? "selected" : ""%> >
+                    <%=x.getTenloai()%>
+                </option>
                 <%
                     }
                 %>

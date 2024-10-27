@@ -78,22 +78,44 @@ public class ManageProduct extends HttpServlet {
                 }
 
             case "edit":
-                int maHoa = Integer.parseInt(request.getParameter("mahoa"));
-                Hoa hoa = hoaDoa.getById(maHoa);
-                request.setAttribute("hoa", hoa);
-                request.setAttribute("dsLoai", loaiDao.getAll());
-                request.getRequestDispatcher("admin/editproduct.jsp").forward(request, response);
+               
+                if (request.getMethod().equalsIgnoreCase("get")) {
+                    int mahoa = Integer.parseInt(request.getParameter("mahoa"));
+                    request.setAttribute("hoa", hoaDoa.getById(mahoa));
+                    request.setAttribute("dsLoai", loaiDao.getAll());
+                    request.getRequestDispatcher("admin/editproduct.jsp").forward(request, response);
+
+                } else if (request.getMethod().equalsIgnoreCase("post")) {
+                    int mahoa = Integer.parseInt(request.getParameter("mahoa"));
+                    String tenhoa = request.getParameter("tenhoa");
+                    double gia = Double.parseDouble(request.getParameter("gia"));
+                    Part part = request.getPart("hinh");
+                    int maloai = Integer.parseInt(request.getParameter("maloai"));
+                    String filename = request.getParameter("oldImg");
+                    if (part.getSize() > 0) {
+                        String realPath = request.getServletContext().getRealPath("/assets/images/products");
+                        filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                        part.write(realPath + "/" + filename);
+
+                    }                    
+                    Hoa objUpdate =new Hoa(mahoa, tenhoa, gia, filename, maloai, new Date(new java.util.Date().getTime()));
+                    if (hoaDoa.Update(objUpdate)) {
+                        request.setAttribute("success", "Cập nhật sản phẩm thành công");
+                    } else {
+                        request.setAttribute("error", "Cập nhật sản phẩm thất bại");
+                    }
+                    request.getRequestDispatcher("ManageProduct?action=list").forward(request, response);
+
+                }
                 break;
             case "delete":
                 int maHoaDelete = Integer.parseInt(request.getParameter("mahoa"));
-                if (hoaDoa.Delete(maHoaDelete))
-                 {
+                if (hoaDoa.Delete(maHoaDelete)) {
                     request.setAttribute("delete", "Xoá sản phẩm thành công");
+                } else {
+                    request.setAttribute("no", "Xoá sản phẩm thất bại");
                 }
-                else{
-                        request.setAttribute("no", "Xoá sản phẩm thất bại");
-                        }
-                response.sendRedirect("ManageProduct?action=list");
+                request.getRequestDispatcher("ManageProduct?action=list").forward(request, response);
                 break;
         }
     }
