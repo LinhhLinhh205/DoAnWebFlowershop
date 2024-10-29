@@ -19,7 +19,7 @@
     Swal.fire("<%=request.getAttribute("success")%>");
 </script>
 <%
-    }else if(request.getAttribute("error")!=null){
+} else if (request.getAttribute("error") != null) {
 
 %>
 <script>
@@ -48,7 +48,7 @@
             <th>Action</th>
         </tr>  
         <%
-                DecimalFormat fmt=new DecimalFormat("#,##0");
+            DecimalFormat fmt = new DecimalFormat("#,##0");
             ArrayList<Hoa> dsHoa = (ArrayList<Hoa>) request.getAttribute("dsHoa");
             for (Hoa x : dsHoa) {
         %>
@@ -66,5 +66,13 @@
         <% }
         %>        
     </table>
+    Chọn trang:
+    <%
+        int pageSum = (int) request.getAttribute("pageSum");
+        for (int i = 1; i <= pageSum; i++) {
+    %>
+    <a href="ManageProduct?page=<%=i %>"> <%=i %></a>
+    <%
+        }%>
 </div>
 <jsp:include page="../shared/footer.jsp" />
