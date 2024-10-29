@@ -19,6 +19,17 @@
     Swal.fire("<%=request.getAttribute("success")%>");
 </script>
 <%
+    }else if(request.getAttribute("error")!=null){
+
+%>
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: '<%=request.getAttribute("error")%>'
+    });
+</script>
+<%
     }
 %>
 
