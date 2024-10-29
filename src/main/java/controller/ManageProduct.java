@@ -111,9 +111,9 @@ public class ManageProduct extends HttpServlet {
             case "delete":
                 int maHoaDelete = Integer.parseInt(request.getParameter("mahoa"));
                 if (hoaDoa.Delete(maHoaDelete)) {
-                    request.setAttribute("delete", "Xoá sản phẩm thành công");
+                    request.setAttribute("success", "Xoá sản phẩm thành công");
                 } else {
-                    request.setAttribute("no", "Xoá sản phẩm thất bại");
+                    request.setAttribute("error", "Xoá sản phẩm thất bại");
                 }
                 request.getRequestDispatcher("ManageProduct?action=list").forward(request, response);
                 break;
