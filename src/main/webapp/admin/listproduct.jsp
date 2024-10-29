@@ -65,14 +65,20 @@
         </tr>  
         <% }
         %>        
-    </table>
-    Chọn trang:
+    </table> 
+    <div>
+        <ul class="pagination justify-content-center">
     <%
+        int pageIndex = (int) request.getAttribute("pageIndex");
         int pageSum = (int) request.getAttribute("pageSum");
         for (int i = 1; i <= pageSum; i++) {
     %>
-    <a href="ManageProduct?page=<%=i %>"> <%=i %></a>
+    <li class="page-item">
+        <a href="ManageProduct?page=<%=i %>" class="page-link <%=pageIndex==i?"active":""%>" > <%=i %></a>
+    </li>
     <%
         }%>
+        </ul>
+    </div>
 </div>
 <jsp:include page="../shared/footer.jsp" />
