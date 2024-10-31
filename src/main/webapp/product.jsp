@@ -8,7 +8,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.HoaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!--nhung noi dung header.jsp-->
 <jsp:include page="shared/header.jsp" />
 <!--nhung noi dung nav.jsp-->
