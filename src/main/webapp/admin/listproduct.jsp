@@ -34,7 +34,7 @@
 %>
 
 <div class="container">
-    <h2> Danh sách sản phẩm</h2>
+    <h2 style="color: green; font-weight: 500; margin-top: 10px"> DANH SÁCH SẢN PHẨM</h2>
     <div class="mb-2 text-end">
         <a href="ManageProduct?action=add" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Thêm mới</a>
     </div>

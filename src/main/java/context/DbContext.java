@@ -5,7 +5,7 @@ public class DbContext {
     
     private static final String serverName = "localhost";
     private static final String dbName = "HoaTuoiDB";
-    private static final String portNumber = "1433";  
+    private static final String portNumber = "1433";
     private static final String userID = "sa";
     private static final String password = "sa";
     
@@ -17,7 +17,7 @@ public class DbContext {
             //b2. dinh nghia chuoi ket noi URL
             String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
             //b3.Thiet lap ket noi
-            conn = DriverManager.getConnection(url,userID,password);       
+            conn = DriverManager.getConnection(url,userID,password);
         }catch(Exception ex){
             System.out.println("Error:" + ex.toString());
         }
