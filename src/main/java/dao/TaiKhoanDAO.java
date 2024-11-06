@@ -29,10 +29,27 @@ public class TaiKhoanDAO {
             rs=ps.executeQuery();
             if(rs.next()){
                 kq=new TaiKhoan(rs.getString(1),rs.getString(2));
-            }
+            }  
         }catch(Exception ex){
             System.out.println("Lỗi: "+ex.toString());
         }
         return kq;
+    }
+    public boolean UpdateTK(TaiKhoan tk) {
+        String sql = "update taikhoan set matkhau=? where tendangnhap=?";
+        conn = DbContext.getConnection();
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, tk.getMatkhau());
+            ps.setString(2, tk.getTendangnhap());
+
+            int kq = ps.executeUpdate();
+            if (kq > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi:" + ex.toString());
+        }
+        return false;
     }
 }

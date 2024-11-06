@@ -15,9 +15,9 @@ import model.TaiKhoan;
 
 /**
  *
- * @author ADMIN
+ * @author PC
  */
-public class LoginServlet extends HttpServlet {
+public class ChangePassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,30 +31,29 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String password=request.getParameter("password");
-        String username=request.getParameter("username");
-        TaiKhoanDAO tkDAO=new TaiKhoanDAO();
-        TaiKhoan tk=tkDAO.checkLogin(username, password);
-        if(tk!=null){
-            HttpSession session=request.getSession();
-            session.setAttribute("username", username);
-            session.setAttribute("password", password);
-            response.sendRedirect("ManageProduct");
-        }else{
-            request.setAttribute("error", "Đăng nhập không thành công");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+
+        String oldpass = request.getParameter("oldpassword");
+        String newpass = request.getParameter("newpassword");
+        String confirmpass = request.getParameter("confirmpassword");
+        if (!newpass.equals(confirmpass)) {
+            request.setAttribute("error", "Mật khảu mới và mật khẩu xác nhận lại không khớp");
+            request.getRequestDispatcher("changepass.jsp").forward(request, response);
         }
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        TaiKhoanDAO tkDao = new TaiKhoanDAO();
+        TaiKhoan tk = tkDao.checkLogin(username, oldpass);
+        if (tk != null) {
+            tk.setMatkhau(newpass);
+            if (tkDao.UpdateTK(tk)) {
+                response.sendRedirect("home.jsp");
+            }else{
+                request.setAttribute("error", "Cập nhật không thành công");
+                request.getRequestDispatcher("changepass.jsp").forward(request, response);
+            }
+        } else {
+            request.setAttribute("error", "Mật khẩu cũ chưa chính xác");
+            request.getRequestDispatcher("changepass.jsp").forward(request, response);
         }
     }
 
