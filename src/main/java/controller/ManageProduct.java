@@ -127,7 +127,7 @@ public class ManageProduct extends HttpServlet {
                 if (hoaDoa.Delete(maHoaDelete)) {
                     request.setAttribute("success", "Xoá sản phẩm thành công");
                 } else {
-                    request.setAttribute("error", "Xoá sản phẩm thất bại");
+                    request.setAttribute("error", "Không tìm xoá sản phẩm cần xoá");
                 }
                 request.getRequestDispatcher("ManageProduct?action=list").forward(request, response);
                 break;

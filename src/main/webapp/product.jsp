@@ -36,7 +36,7 @@
         <div class="col-sm-9">
             <div class="row">
                 <%
-                    DecimalFormat fmt=new DecimalFormat("#,##0");
+                    DecimalFormat fmt=new DecimalFormat("#,##0 đồng");
                     for (Hoa x : dsHoa) 
                     {
                 %>

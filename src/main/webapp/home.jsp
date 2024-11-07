@@ -27,7 +27,7 @@
         <div class="col-sm-12">
             <div class="row">  
                 <%
-                DecimalFormat fmt=new DecimalFormat("#,##0");
+                DecimalFormat fmt=new DecimalFormat("#,##0 đồng");
                 HoaDAO hoaDao=new HoaDAO();
                 ArrayList<Hoa> dsHoa=hoaDao.getTop10();
                 for(Hoa x:dsHoa){
